@@ -2,3 +2,7 @@
 
 %:
 	dh $@ --parallel
+
+override_dh_installinit:
+#	do not start init script on install/remove/upgrade (it uses apt-get !!!!)
+	dh_installinit --no-start
