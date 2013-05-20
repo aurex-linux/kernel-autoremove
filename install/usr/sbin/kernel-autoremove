@@ -61,7 +61,12 @@ do_info(){
 
 do_remove(){
 	rc=0
-	apt-get purge $APT_OPTIONS $(list_removable_packages |tr "\n" " ") || rc=$?
+	NUM_PKGS="$(list_removable_packages | sed -e "/^[[:blank:]]*$/d" |wc -l)"
+	if [ "$NUM_PKGS" ] && [ $NUM_PKGS -gt 0 ] ; then
+		apt-get purge $APT_OPTIONS $(list_removable_packages |tr "\n" " ") || rc=$?
+	else
+		echo "No packages to remove"
+	fi
 	return $rc
 }
 

@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/sbin/kernel-autoremove remove || true

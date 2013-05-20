@@ -11,6 +11,4 @@ stop on runlevel [!2345]
 
 task
 
-stop on runlevel [016]
-
 exec /usr/sbin/kernel-autoremove remove

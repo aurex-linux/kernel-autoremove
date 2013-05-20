@@ -11,5 +11,6 @@ Architecture: all
 Depends: ${misc:Depends}
 Description: removes obsolete kernel and headers packages
  This packages checks periodically installed kernel and headers
- packages, and deinstall automatically
-
+ packages. Older packages are automagically removed.
+ The intended use is to free space in servers (specially in /boot,
+ because this directory tends to get full due to kernel upgrades)
