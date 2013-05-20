@@ -1,3 +1,9 @@
+kernel-autoremove (0.2) precise; urgency=low
+
+  * Disable init script in package install/upgrade/remove 
+
+ -- Luis Antonio Garcia Gisbert <luisgg@gmail.com>  Mon, 20 May 2013 14:38:13 +0200
+
 kernel-autoremove (0.1) precise; urgency=low
 
   * Initial release.
