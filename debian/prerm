@@ -1,5 +1,0 @@
-#!/bin/sh
-
-#rm -fr /etc/skel/.mozilla
-
-#DEBHELPER#

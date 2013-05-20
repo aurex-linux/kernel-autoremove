@@ -1,5 +1,4 @@
 #!/bin/sh
 
-#mkdir -p /etc/skel/.mozilla
-#tar xzf /usr/share/aurex-firefox-profile/firefox-profile.tgz -C /etc/skel/
+[ -r /etc/default/kernel-autoremove ] || cp /usr/share/kernel-autoremove/kernel-autoremove.default /etc/default/kernel-autoremove
 #DEBHELPER#
