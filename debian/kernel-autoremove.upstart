@@ -9,6 +9,19 @@ author          "Luis Antonio Garcia Gisbert<luisgg@gmail.com>"
 start on runlevel [2345]
 stop on runlevel [!2345]
 
-task
-
-exec /usr/sbin/kernel-autoremove remove
+script
+#/usr/sbin/kernel-autoremove remove
+	RETRY_INTERVAL=300
+	# 5 min
+	EXEC_INTERVAL=86400
+	# 24 hrs
+	WAIT_TIME=$RETRY_INTERVAL
+	while : ; do
+		sleep $WAIT_TIME
+		if /usr/sbin/kernel-autoremove remove ; then
+			WAIT_TIME=$EXEC_INTERVAL
+		else
+			WAIT_TIME=$RETRY_INTERVAL
+		fi
+	done
+end script

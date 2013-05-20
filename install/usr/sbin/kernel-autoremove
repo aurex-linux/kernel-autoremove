@@ -71,7 +71,6 @@ do_remove(){
 }
 
 APT_OPTIONS="-y"
-rc=0
 
 # load configuration
 [ ! -r /etc/default/kernel-autoremove ] || . /etc/default/kernel-autoremove
@@ -81,6 +80,7 @@ if [ -z "$PRESERVED_KERNELS_NUM" ] || ! echo "$PRESERVED_KERNELS_NUM" |grep -q "
 	PRESERVED_KERNELS_NUM=2
 fi
 
+rc=0
 case "$1" in
 	simulate)
 		APT_OPTIONS="$APT_OPTIONS -sV"
