@@ -1,0 +1,15 @@
+Source: kernel-autoremove
+Section: misc
+Priority: optional
+Maintainer: Luis Antonio Garcia Gisbert <luisgg@gmail.com>
+Build-Depends: debhelper ( >= 7 )
+Homepage: https://github.com/luisgg
+Standards-Version: 3.9.3
+
+Package: kernel-autoremove
+Architecture: all
+Depends: ${misc:Depends}
+Description: removes obsolete kernel and headers packages
+ This packages checks periodically installed kernel and headers
+ packages, and deinstall automatically
+

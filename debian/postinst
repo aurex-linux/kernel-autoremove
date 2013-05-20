@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#mkdir -p /etc/skel/.mozilla
+#tar xzf /usr/share/aurex-firefox-profile/firefox-profile.tgz -C /etc/skel/
+#DEBHELPER#

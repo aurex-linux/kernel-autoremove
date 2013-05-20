@@ -1,0 +1,5 @@
+kernel-autoremove (0.1) precise; urgency=low
+
+  * Initial release.
+
+ -- Luis Antonio Garcia Gisbert <luisgg@gmail.com>  Mon, 20 May 2013 07:54:22 +0200
