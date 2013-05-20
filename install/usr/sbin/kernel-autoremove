@@ -1,0 +1,95 @@
+#!/bin/sh
+# -------
+# File:        kernel-autoremove
+# Description: Remove unused kernel and headers packages
+# Author:      Luis Antonio Garcia Gisbert <luisgg@gmail.com> 
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along 
+# with this program; if not, write to the Free Software Foundation, Inc., 
+# 51 Franklin St, Fifth Floor, Boston MA 02110-1301 USA
+# --------
+
+usage(){
+	echo "Usage: $(basename "$0") {simulate|remove|info}" >&2
+	exit 1
+}
+
+kernel_packages(){
+	dpkg -l |cut -f 3 -d \ |grep "linux\-image\-[[:digit:]]"
+	dpkg -l |cut -f 3 -d \ |grep "linux\-headers\-[[:digit:]]"
+}
+
+get_current_version(){
+	uname -r |sed -e "s%\-[[:alpha:]].*$%%"
+}
+
+get_last_versions(){
+	dpkg -l |cut -f 3 -d \ |sed -ne "/linux\-image\-[[:digit:]]/{s%linux\-image\-%%;s%\-[[:alpha:]].*$%%;p}" |sort -u |tail -$PRESERVED_KERNELS_NUM
+}
+
+list_removable_packages(){
+	TMP_FILE="$(tempfile)"
+	get_current_version > "$TMP_FILE"
+	get_last_versions >> "$TMP_FILE"
+	if [ "$KERNEL_VERSION_WHITELIST" ] ; then
+		echo "$KERNEL_VERSION_WHITELIST" |tr " " "\n" |sed -e "/^[[:blank:]]*$/d" >>  "$TMP_FILE"
+	fi
+	kernel_packages |grep -vFf "$TMP_FILE"
+	rm -f "$TMP_FILE"
+}
+
+do_info(){
+	echo ">>Number of preserved kernels: $PRESERVED_KERNELS_NUM"
+	echo ">>Current version: $(get_current_version)"
+	echo ">>Last versions:"
+	get_last_versions
+	echo ">>kernel packages:"
+	kernel_packages
+	echo ">>Removable packages:"
+	list_removable_packages
+}
+
+do_remove(){
+	rc=0
+	apt-get purge $APT_OPTIONS $(list_removable_packages |tr "\n" " ") || rc=$?
+	return $rc
+}
+
+APT_OPTIONS="-y"
+rc=0
+
+# load configuration
+[ ! -r /etc/default/kernel-autoremove ] || . /etc/default/kernel-autoremove
+[ ! -r /etc/kernel-autoremove.conf ] || . /etc/kernel-autoremove.conf
+
+if [ -z "$PRESERVED_KERNELS_NUM" ] || ! echo "$PRESERVED_KERNELS_NUM" |grep -q "^[[:digit:]]\+$" || [ $PRESERVED_KERNELS_NUM -lt 1 ] ; then
+	PRESERVED_KERNELS_NUM=2
+fi
+
+case "$1" in
+	simulate)
+		APT_OPTIONS="$APT_OPTIONS -sV"
+		do_remove || rc=$?
+		;;
+	remove)
+		do_remove || rc=$?
+		;;
+	info)
+		do_info
+		;;
+	*)
+		usage
+		;;
+esac
+exit $rc
+

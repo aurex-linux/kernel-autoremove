@@ -1,0 +1,8 @@
+# kernel-autoremove defaults file
+# change values in this file or override by creating /etc/kernel-autoremove.conf
+
+#set the number of latest kernels to preserve (invalid or lesser than 1 values are ignored)
+PRESERVED_KERNELS_NUM=3
+
+#blank delimited optional whitelist of kernel versions to preserve (fixed strings)
+KERNEL_VERSION_WHITELIST=""
