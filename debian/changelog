@@ -1,3 +1,9 @@
+kernel-autoremove (0.5) precise; urgency=low
+
+  * Minor fixes
+
+ -- Luis Antonio Garcia Gisbert <luisgg@gmail.com>  Tue, 21 May 2013 21:13:26 +0200
+
 kernel-autoremove (0.4) precise; urgency=low
 
   * Fixed package filter to include only full installed/configured

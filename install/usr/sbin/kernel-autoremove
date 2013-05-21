@@ -25,8 +25,7 @@ usage(){
 }
 
 kernel_packages(){
-	dpkg -l |cut -f 3 -d \ |grep "linux\-image\-[[:digit:]]"
-	dpkg -l |grep "^ii[[:space:]]\+linux\-image\-[[:digit:]]" |cut -f 3 -d \
+	dpkg -l |grep "^ii[[:space:]]\+linux\-image\-[[:digit:]]" |cut -f 3 -d \ 
 	dpkg -l |grep "^ii[[:space:]]\+linux\-headers\-[[:digit:]]" |cut -f 3 -d \ 
 }
 
