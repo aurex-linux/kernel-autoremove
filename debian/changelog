@@ -1,3 +1,10 @@
+kernel-autoremove (0.4) precise; urgency=low
+
+  * Fixed package filter to include only full installed/configured
+    packages
+
+ -- Luis Antonio Garcia Gisbert <luisgg@gmail.com>  Tue, 21 May 2013 21:04:48 +0200
+
 kernel-autoremove (0.3) precise; urgency=low
 
   * upstart task replaced with a job to periodically

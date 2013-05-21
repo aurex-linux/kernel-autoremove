@@ -26,7 +26,8 @@ usage(){
 
 kernel_packages(){
 	dpkg -l |cut -f 3 -d \ |grep "linux\-image\-[[:digit:]]"
-	dpkg -l |cut -f 3 -d \ |grep "linux\-headers\-[[:digit:]]"
+	dpkg -l |grep "^ii[[:space:]]\+linux\-image\-[[:digit:]]" |cut -f 3 -d \
+	dpkg -l |grep "^ii[[:space:]]\+linux\-headers\-[[:digit:]]" |cut -f 3 -d \ 
 }
 
 get_current_version(){
@@ -34,7 +35,7 @@ get_current_version(){
 }
 
 get_last_versions(){
-	dpkg -l |cut -f 3 -d \ |sed -ne "/linux\-image\-[[:digit:]]/{s%linux\-image\-%%;s%\-[[:alpha:]].*$%%;p}" |sort -u |tail -$PRESERVED_KERNELS_NUM
+	dpkg -l |sed -ne "/^ii[[:space:]]\+linux\-image\-[[:digit:]]/{s%^.*linux\-image\-%%;s%\-[[:alpha:]].*$%%;p}" |sort -u |tail -$PRESERVED_KERNELS_NUM
 }
 
 list_removable_packages(){
