@@ -8,7 +8,7 @@ Standards-Version: 3.9.3
 
 Package: kernel-autoremove
 Architecture: all
-Depends: ${misc:Depends}
+Depends: upstart, ${misc:Depends}
 Description: removes obsolete kernel and headers packages
  This packages checks periodically installed kernel and headers
  packages. Older packages are automagically removed.
